@@ -1,2 +1,72 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+    import Add from "$lib/add.svelte";
+    import Inprogress from "$lib/inprogress.svelte";
+    import Queue from "$lib/queue.svelte";
+
+    import { signInWithEmailAndPassword } from 'firebase/auth';
+    import { auth } from '$lib/firebase';
+
+    import { ref, set, get, push } from 'firebase/database';
+    import { db } from '$lib/firebase';
+
+    import { getAuth } from "firebase/auth";
+
+    let currentAuth
+    let uid
+
+    let needlogin = true
+    let trueAuth = false
+
+    let email = '';
+    let password = '';
+    let error = '';
+
+    async function login() {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            trueAuth = true;
+            needlogin = false;
+            currentAuth = getAuth();
+            uid = currentAuth.currentUser.uid;
+        } catch (e) {
+            error = '로그인 실패';
+            console.error(e);
+        }
+    }
+
+    import { signOut } from 'firebase/auth';
+
+    async function logout() {
+        try {
+            await signOut(auth);
+            trueAuth = false;
+            needlogin = true;
+            currentAuth = '';
+            uid = '';
+            
+            autoload = false;
+            clicked = 1;
+            currentEdit = '';
+        } catch (e) {
+            console.error(e);
+        }
+    }
+</script>
+
+{#if needlogin && !trueAuth}
+<div id="Loginpage">
+    <input type="email" bind:value={email} placeholder="이메일" />
+    <input type="password" bind:value={password} placeholder="비밀번호" />
+    <button on:click={login}>로그인</button>
+</div>
+{/if}
+{#if trueAuth}
+<Inprogress />
+<Queue />
+<Add />
+{:else}
+<div id="NotanAuth">
+    로그인되지 않음<br>
+    개발자에게 계정발급을 신청하세요
+</div>
+{/if}
