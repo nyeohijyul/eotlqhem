@@ -76,7 +76,7 @@
         margin: 20px;
         padding: 20px;
         background-color: white;
-        width: 100%;
-        height: 100%;
+        width: calc(100vw - 40px);
+        height: calc(100vh - 40px);
     }
 </style>
