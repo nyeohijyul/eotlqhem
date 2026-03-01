@@ -79,5 +79,6 @@
         right: 20px;
         bottom: 20px;
         background-color: white;
+        padding: 20px;
     }
 </style>
