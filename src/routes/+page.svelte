@@ -60,9 +60,11 @@
 {:else}
 <div id="container">
     <div id="Loginpage">
-        <input type="email" bind:value={email} placeholder="이메일" />
-        <input type="password" bind:value={password} placeholder="비밀번호" />
-        <button on:click={login}>로그인</button>
+        <form>
+            <input type="email" bind:value={email} placeholder="이메일" />
+            <input type="password" bind:value={password} placeholder="비밀번호" />
+            <button type="submit" on:click={login}>로그인</button>
+        </form>
     </div>
     <div id="NotanAuth">
         로그인되지 않음<br>
