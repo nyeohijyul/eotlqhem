@@ -74,10 +74,11 @@
 <style>
     #container {
         position: fixed;
-        top: 20px;
-        left: 20px;
-        right: 20px;
-        bottom: 20px;
+        top: 40px;
+        left: 40px;
+        right: 40px;
+        bottom: 40px;
+        box-sizing: border-box;
         background-color: white;
         padding: 20px;
     }
