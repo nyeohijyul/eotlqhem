@@ -73,10 +73,11 @@
 
 <style>
     #container {
-        margin: 20px;
-        padding: 20px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
         background-color: white;
-        width: calc(100dvw - 40px);
-        height: calc(100dvh - 40px);
     }
 </style>
