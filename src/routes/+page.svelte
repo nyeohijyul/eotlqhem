@@ -16,7 +16,6 @@
     let currentAuth;
     let uid;
 
-    let needlogin = true;
     let trueAuth = false;
 
     let email = '';
@@ -27,7 +26,6 @@
         try {
             await signInWithEmailAndPassword(auth, email, password);
             trueAuth = true;
-            needlogin = false;
             currentAuth = getAuth();
             uid = currentAuth.currentUser.uid;
         } catch (e) {
@@ -41,7 +39,6 @@
             await signOut(auth);
             trueAuth = false;
             dispatch("logout")
-            needlogin = true;
             currentAuth = '';
             uid = '';
             
@@ -55,29 +52,28 @@
 </script>
 
 {#if trueAuth}
-<div id="container">
-    <Inprogress />
-    <Queue />
-    <Add />
-    <Logout on:logout={logout} />
-</div>
+<Inprogress />
+<Queue />
+<Add />
+<Logout on:logout={logout} />
 {:else}
-{#if needlogin}
-<div id="Loginpage">
-    <input type="email" bind:value={email} placeholder="이메일" />
-    <input type="password" bind:value={password} placeholder="비밀번호" />
-    <button on:click={login}>로그인</button>
+<div id="container">
+    <div id="Loginpage">
+        <input type="email" bind:value={email} placeholder="이메일" />
+        <input type="password" bind:value={password} placeholder="비밀번호" />
+        <button on:click={login}>로그인</button>
+    </div>
+    <div id="NotanAuth">
+        로그인되지 않음<br>
+        개발자에게 계정발급을 신청하세요
+    </div>
 </div>
-{/if}
-<div id="NotanAuth">
-    로그인되지 않음<br>
-    개발자에게 계정발급을 신청하세요
-</div>
+
 {/if}
 
 <style>
     #container {
-        margin: 0;
-        padding: 0;
+        margin-top: 20px;
+        padding: 20px;
     }
 </style>
