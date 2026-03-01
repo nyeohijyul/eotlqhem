@@ -54,13 +54,6 @@
     }
 </script>
 
-{#if needlogin && !trueAuth}
-<div id="Loginpage">
-    <input type="email" bind:value={email} placeholder="이메일" />
-    <input type="password" bind:value={password} placeholder="비밀번호" />
-    <button on:click={login}>로그인</button>
-</div>
-{/if}
 {#if trueAuth}
 <div id="container">
     <Inprogress />
@@ -69,6 +62,13 @@
     <Logout on:logout={logout} />
 </div>
 {:else}
+{#if needlogin}
+<div id="Loginpage">
+    <input type="email" bind:value={email} placeholder="이메일" />
+    <input type="password" bind:value={password} placeholder="비밀번호" />
+    <button on:click={login}>로그인</button>
+</div>
+{/if}
 <div id="NotanAuth">
     로그인되지 않음<br>
     개발자에게 계정발급을 신청하세요
