@@ -61,12 +61,21 @@
 </div>
 {/if}
 {#if trueAuth}
-<Inprogress />
-<Queue />
-<Add />
+<div id="container">
+    <Inprogress />
+    <Queue />
+    <Add />
+</div>
 {:else}
 <div id="NotanAuth">
     로그인되지 않음<br>
     개발자에게 계정발급을 신청하세요
 </div>
 {/if}
+
+<style>
+    #container {
+        margin: 0;
+        padding: 0;
+    }
+</style>
