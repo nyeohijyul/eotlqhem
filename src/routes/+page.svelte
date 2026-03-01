@@ -2,20 +2,22 @@
     import Add from "$lib/add.svelte";
     import Inprogress from "$lib/inprogress.svelte";
     import Queue from "$lib/queue.svelte";
+    import Logout from "$lib/logout.svelte";
 
     import { signInWithEmailAndPassword } from 'firebase/auth';
     import { auth } from '$lib/firebase';
+    import { getAuth } from "firebase/auth";
+    import { signOut } from 'firebase/auth';
 
     import { ref, set, get, push } from 'firebase/database';
     import { db } from '$lib/firebase';
 
-    import { getAuth } from "firebase/auth";
 
-    let currentAuth
-    let uid
+    let currentAuth;
+    let uid;
 
-    let needlogin = true
-    let trueAuth = false
+    let needlogin = true;
+    let trueAuth = false;
 
     let email = '';
     let password = '';
@@ -33,13 +35,12 @@
             console.error(e);
         }
     }
-
-    import { signOut } from 'firebase/auth';
-
+    
     async function logout() {
         try {
             await signOut(auth);
             trueAuth = false;
+            dispatch("logout")
             needlogin = true;
             currentAuth = '';
             uid = '';
@@ -65,6 +66,7 @@
     <Inprogress />
     <Queue />
     <Add />
+    <Logout on:logout={logout} />
 </div>
 {:else}
 <div id="NotanAuth">
