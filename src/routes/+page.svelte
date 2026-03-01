@@ -73,7 +73,8 @@
 
 <style>
     #container {
-        margin-top: 20px;
+        margin: 20px;
         padding: 20px;
+        background-color: white;
     }
 </style>
