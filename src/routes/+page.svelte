@@ -4,6 +4,8 @@
     import Queue from "$lib/queue.svelte";
     import Logout from "$lib/logout.svelte";
 
+    import { uid } from "$lib/stores/app";
+
     import { signInWithEmailAndPassword } from 'firebase/auth';
     import { auth } from '$lib/firebase';
     import { getAuth } from "firebase/auth";
@@ -14,7 +16,6 @@
 
 
     let currentAuth;
-    let uid;
 
     let trueAuth = false;
 
@@ -27,7 +28,8 @@
             await signInWithEmailAndPassword(auth, email, password);
             trueAuth = true;
             currentAuth = getAuth();
-            uid = currentAuth.currentUser.uid;
+            uid.update($uid => currentAuth.currentUser.uid);
+            console.log($uid)
         } catch (e) {
             error = '로그인 실패';
             console.error(e);
@@ -38,9 +40,8 @@
         try {
             await signOut(auth);
             trueAuth = false;
-            dispatch("logout")
             currentAuth = '';
-            uid = '';
+            uid.update($uid => '');
             
             autoload = false;
             clicked = 1;

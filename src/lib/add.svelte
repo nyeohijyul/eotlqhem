@@ -1,5 +1,5 @@
 <script>
-    import { isnotAdding } from "./stores/app";
+    import { isnotAdding, uid } from "./stores/app";
 
     import { ref, set, get, push } from 'firebase/database';
     import { db } from '$lib/firebase';
@@ -9,13 +9,13 @@
 
     async function savedata(){
         if (titledata){
-            await push(ref(db, `will`), {
+            await push(ref(db, `${$uid}/will`), {
                 title: titledata,
                 estimated: estimateddata[0]*3600 + estimateddata[1]*60 + estimateddata[2],
                 modifiedformer: 0
             });
         } else {
-            await push(ref(db, `will`), {
+            await push(ref(db, `${$uid}/will`), {
                 title: '기다리기',
                 estimated: estimateddata[0]*3600 + estimateddata[1]*60 + estimateddata[2],
                 modifiedformer: 0

@@ -1,25 +1,25 @@
 <script>
     import { db } from "./firebase";
 
-    import { isnotprocessing, inprogress, second, stoptimer, expectedtime } from "./stores/app";
+    import { isnotprocessing, inprogress, second, stoptimer, expectedtime, uid } from "./stores/app";
 
     import { set, ref, remove, get } from 'firebase/database';
 
     async function imstucked(){
         isnotprocessing.update($isnotprocessing => !$isnotprocessing);
         stoptimer.set(true);
-        await remove(ref(db, `will/${$inprogress[2]}`));
-        await set(ref(db, `done/${$inprogress[2]}/note`), "failed");
+        await remove(ref(db, `${$uid}/will/${$inprogress[2]}`));
+        await set(ref(db, `${$uid}/done/${$inprogress[2]}/note`), "failed");
     }
     async function imdone(){
         isnotprocessing.update($isnotprocessing => !$isnotprocessing);
         stoptimer.set(true);
-        await remove(ref(db, `will/${$inprogress[2]}`));
-        await set(ref(db, `done/${$inprogress[2]}/note`), "success");
+        await remove(ref(db, `${$uid}/will/${$inprogress[2]}`));
+        await set(ref(db, `${$uid}/done/${$inprogress[2]}/note`), "success");
     }
     async function moretime(a){
-        await set(ref(db, `done/${$inprogress[2]}/estimated`), Number($inprogress[1]) + a);
-        await set(ref(db, `will/${$inprogress[2]}/estimated`), Number($inprogress[1]) + a);
+        await set(ref(db, `${$uid}/done/${$inprogress[2]}/estimated`), Number($inprogress[1]) + a);
+        await set(ref(db, `${$uid}/will/${$inprogress[2]}/estimated`), Number($inprogress[1]) + a);
         inprogress.set([$inprogress[0],Number($inprogress[1]) + a, $inprogress[2]]);
     }
 
@@ -38,12 +38,12 @@
         return result;
     }
     async function cancel(){
-        await remove(ref(db, `done/${$inprogress[2]}`));
-        let haveyoubeencanceled = await get(ref(db, `will/${$inprogress[2]}/havebeencanceled`));
+        await remove(ref(db, `${$uid}/done/${$inprogress[2]}`));
+        let haveyoubeencanceled = await get(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`));
         if (haveyoubeencanceled) {
-            await set(ref(db, `will/${$inprogress[2]}/havebeencanceled`), (await get(ref(db, `will/${$inprogress[2]}/havebeencanceled`))).val() + 1);
+            await set(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`), (await get(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`))).val() + 1);
         } else {
-            await set(ref(db, `will/${$inprogress[2]}/havebeencanceled`), 0);
+            await set(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`), 0);
         }
         stoptimer.set(true);
         isnotprocessing.update($isnotprocessing => !$isnotprocessing);

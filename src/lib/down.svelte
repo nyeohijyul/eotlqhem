@@ -4,6 +4,8 @@
     import { ref, set, get, push } from 'firebase/database';
     import { db } from '$lib/firebase';
 
+    import { uid } from './stores/app';
+
     let estimateddata = 180;
 
     export let locatedat = '';
@@ -14,23 +16,23 @@
     let estimatedseconds = estimateddata - estimatedhours*3600 - estimatedminutes*60;
 
     async function savedata(){
-        const current = (await get(ref(db, `will/${locatedat}/down`))).val();
+        const current = (await get(ref(db, `${$uid}/will/${locatedat}/down`))).val();
         let modifiedlocatedat = locatedat + 'zzz'.repeat(current? current+1 : 1 );
 
         if (titledata){
-            await set(ref(db, `will/${modifiedlocatedat}`), {
+            await set(ref(db, `${$uid}/will/${modifiedlocatedat}`), {
                 title: titledata,
                 estimated: estimatedhours*3600 + estimatedminutes*60 + estimatedseconds,
                 modifiedformer: 0
             });
         } else {
-            await set(ref(db, `will/${modifiedlocatedat}`), {
+            await set(ref(db, `${$uid}/will/${modifiedlocatedat}`), {
                 title: '기다리기',
                 estimated: estimatedhours*3600 + estimatedminutes*60 + estimatedseconds,
                 modifiedformer: 0
             });
         }
-    await set(ref(db, `will/${locatedat}/down`), current? current+1 : 1 );
+    await set(ref(db, `${$uid}/will/${locatedat}/down`), current? current+1 : 1 );
     titledata='';
     estimateddata=0;
     hide = !hide;

@@ -3,7 +3,7 @@
 
     import { ref, set, get, push } from 'firebase/database';
     import { db } from '$lib/firebase';
-    import { nowdate, inprogress, expectedtime } from './stores/app';
+    import { nowdate, inprogress, expectedtime, uid } from './stores/app';
 
     export let estimateddata = 0;
 
@@ -17,7 +17,7 @@
     let estimatedseconds = estimateddata - estimatedhours*3600 - estimatedminutes*60;
 
     async function savedata(){
-        await set(ref(db, `will/${locatedat}`), {
+        await set(ref(db, `${$uid}/will/${locatedat}`), {
             title: locatedattitle,
             estimated: estimatedhours*3600 + estimatedminutes*60 + estimatedseconds,
             modifiedformer: imodifiedformerofthisone

@@ -1,6 +1,5 @@
 <script>
-    import { isnotprocessing, inprogress, second, stoptimer, expectedtime, nowdate } from "./stores/app";
-
+    import { isnotprocessing, inprogress, second, stoptimer, expectedtime, nowdate, uid } from "./stores/app";
 
     import { onMount } from 'svelte';
     import { ref, onValue, get, push, remove, set } from 'firebase/database';
@@ -16,7 +15,7 @@
     let now = new Date();
 
     onMount(() => {
-        onValue(ref(db, 'will'), (s) => {
+        onValue(ref(db, `${$uid}will`), (s) => {
             queues = [];
             if(s.val()){
                 let a = Object.keys( s.val() );
@@ -55,17 +54,17 @@
             inprogress.update($inprogress => [titlename, estimatedtime, key]);
             starttime = Date.now();
 
-            await set(ref(db, `done/${key}`), {
+            await set(ref(db, `${$uid}/done/${key}`), {
                 title: titlename,
                 estimated: estimatedtime
             });
 
-            let haveyoubeencanceled = await get(ref(db, `will/${$inprogress[2]}/havebeencanceled`));
+            let haveyoubeencanceled = await get(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`));
 
             if (haveyoubeencanceled) {
-                await set(ref(db, `will/${$inprogress[2]}/havebeencanceled`), (await get(ref(db, `will/${$inprogress[2]}/havebeencanceled`))).val() + 1);
+                await set(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`), (await get(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`))).val() + 1);
             } else {
-                await set(ref(db, `will/${$inprogress[2]}/havebeencanceled`), 0);
+                await set(ref(db, `${$uid}/will/${$inprogress[2]}/havebeencanceled`), 0);
             }
             isnotprocessing.update($isnotprocessing => !$isnotprocessing);
         }

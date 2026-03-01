@@ -7,3 +7,4 @@ export const second = writable('');
 export const stoptimer = writable(false);
 export const expectedtime = writable('');
 export const nowdate = writable('');
+export const uid = writable('');

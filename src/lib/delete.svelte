@@ -5,11 +5,11 @@
     import { ref, remove } from 'firebase/database';
     import { db } from '$lib/firebase';
 
-    import { stoptimer, isnotprocessing } from './stores/app';
+    import { stoptimer, isnotprocessing, uid } from './stores/app';
 
     export let locatedat = '';
     async function deletedata(){
-        await remove(ref(db, `will/${locatedat}`));
+        await remove(ref(db, `${$uid}/will/${locatedat}`));
         if (isfirst){
             stoptimer.set(true);
             isnotprocessing.set(true);

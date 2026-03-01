@@ -4,7 +4,7 @@
     import { ref, set, get, push } from 'firebase/database';
     import { db } from '$lib/firebase';
 
-    import { isnotprocessing } from './stores/app';
+    import { isnotprocessing, uid } from './stores/app';
 
     let estimateddata = 0;
     export let tmpmodifiedformer = 0;
@@ -18,7 +18,7 @@
     let estimatedseconds = estimateddata - estimatedhours*3600 - estimatedminutes*60;
 
     async function savedata(){
-        await set(ref(db, `will/${locatedat}/modifiedformer`), Number(tmpmodifiedformer)+1);
+        await set(ref(db, `${$uid}/will/${locatedat}/modifiedformer`), Number(tmpmodifiedformer)+1);
         let modifiedlocatedat;
 
         let tmp = locatedat.split('');
@@ -28,13 +28,13 @@
         modifiedlocatedat = tmp.join('') + '--'+ tmpmodifiedformer + tmpmodifiedformer + tmpmodifiedformer;
 
         if (titledata){
-            await set(ref(db, `will/${modifiedlocatedat}`), {
+            await set(ref(db, `${$uid}/will/${modifiedlocatedat}`), {
                 title: titledata,
                 estimated: estimatedhours*3600 + estimatedminutes*60 + estimatedseconds,
                 modifiedformer: 0
             });
         } else {
-            await set(ref(db, `will/${modifiedlocatedat}`), {
+            await set(ref(db, `${$uid}/will/${modifiedlocatedat}`), {
                 title: '기다리기',
                 estimated: estimatedhours*3600 + estimatedminutes*60 + estimatedseconds,
                 modifiedformer: 0
