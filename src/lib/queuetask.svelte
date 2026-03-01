@@ -15,7 +15,7 @@
     let now = new Date();
 
     onMount(() => {
-        onValue(ref(db, `${$uid}will`), (s) => {
+        onValue(ref(db, `${$uid}/will`), (s) => {
             queues = [];
             if(s.val()){
                 let a = Object.keys( s.val() );
