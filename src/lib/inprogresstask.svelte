@@ -69,21 +69,21 @@
 <style>
     @media (orientation: landscape) {
         #container {
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
             right: 60dvw;
-            bottom: 20px;
+            bottom: 10px;
         }
-        #secondcontainer { height: calc(100dvh - 60px); margin: 10px 15px 10px 10px; }
+        #secondcontainer { height: calc(100dvh - 40px); margin: 10px 20px 10px 10px; }
     }
     @media (orientation: portrait) {
         #container {
-            top: 20px;
-            left: 20px;
-            right: 20px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
             bottom: 60dvh;
         }
-        #secondcontainer { height: calc(40dvh - 45px); margin: 10px 10px 15px; }
+        #secondcontainer { height: calc(40dvh - 40px); margin: 10px 10px 10px; }
     }
     #container {
         position: fixed;
@@ -96,6 +96,10 @@
         overflow: auto;
         box-sizing: border-box;
         padding: 20px;
+        border-radius: 20px;
+background: #ffffff;
+box-shadow: inset 20px 20px 60px #1428A0,
+            inset -20px -20px 60px #ffffff;
     }
     p { margin-top: 0; }
 </style>

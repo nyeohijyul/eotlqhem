@@ -121,7 +121,8 @@
     @media(orientation: landscape){ #container{ height: calc(100dvh - 60px); margin: 10px 10px 10px 15px; } }
     @media(orientation: portrait){ #container{ height: calc(60dvh - 45px); margin: 15px 10px 10px; } }
     #container {
-        background-color: white;
+        /* background-color: white; */
+        background-color: transparent;
 
         overflow: auto;
         padding: 20px;
