@@ -77,10 +77,10 @@
 <style>
     #container {
         position: fixed;
-        top: 30px;
-        left: 30px;
-        right: 30px;
-        bottom: 30px;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
         box-sizing: border-box;
         background-color: white;
         padding: 20px;
