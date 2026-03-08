@@ -84,5 +84,9 @@
         box-sizing: border-box;
         background-color: white;
         padding: 20px;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: inset 20px 20px 60px #1428A0,
+        inset -20px -20px 60px #ffffff;
     }
 </style>
